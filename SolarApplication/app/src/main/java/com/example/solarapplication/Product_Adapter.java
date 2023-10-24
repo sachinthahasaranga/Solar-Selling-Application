@@ -88,16 +88,16 @@ public class Product_Adapter extends BaseAdapter {
         Quantity.setText(String.valueOf(initialQuantity));
 
 
-        int quantity = Integer.parseInt(qty);
-        // Parse the product price (assuming it's a numeric value)
-        double price1 = Double.parseDouble(ProductPrice);
+            int quantity = Integer.parseInt(qty);
+            // Parse the product price (assuming it's a numeric value)
+            double price1 = Double.parseDouble(ProductPrice);
 
-        // Calculate the subtotal
-        double subtotal = quantity * price1;
+            // Calculate the subtotal
+            double subtotal = quantity * price1;
 
 
         //    TextView subtotalTextView = findViewById(R.id.subtotalTextView);
-        //  subtotalTextView.setText("Subtotal: Rs. " + subtotal);
+          //  subtotalTextView.setText("Subtotal: Rs. " + subtotal);
 
 
 
@@ -107,7 +107,7 @@ public class Product_Adapter extends BaseAdapter {
                 // Increment the quantity when the plus button is clicked
                 int currentQuantity = Integer.parseInt(Quantity.getText().toString());
                 Quantity.setText(String.valueOf(currentQuantity + 1));
-                //  Toast.makeText(context.getApplicationContext(),"Subtotal: Rs. " + subtotal, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(context.getApplicationContext(),"Subtotal: Rs. " + subtotal, Toast.LENGTH_SHORT).show();
             }
         });
         // Add a click listener to the minus button
@@ -129,13 +129,13 @@ public class Product_Adapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getContext());
+               AlertDialog.Builder alertDialog = new AlertDialog.Builder(view.getContext());
                 alertDialog.setTitle("Product Details");
                 alertDialog.setMessage("Product Name: "+post.getProductName()+
-                        "\nBrand Name: "+ post.getBrandName() +
-                        "\nCategory: "+post.getCategory()+
-                        "\nWarranty Period: "+post.getWarrantyPeriod()+" Years"+
-                        "\nPrice: "+post.getPrice()+".00/="+
+                                "\nBrand Name: "+ post.getBrandName() +
+                                "\nCategory: "+post.getCategory()+
+                                "\nWarranty Period: "+post.getWarrantyPeriod()+" Years"+
+                                "\nPrice: "+post.getPrice()+".00/="+
                         "\nDescription: "+post.getDescription());
                 alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -202,7 +202,7 @@ public class Product_Adapter extends BaseAdapter {
                                     OtherSpecialRequest = "No";
                                 }
 
-                                //  Toast.makeText(context.getApplicationContext(), (CharSequence) OtherSpecialRequest, Toast.LENGTH_SHORT).show();
+                              //  Toast.makeText(context.getApplicationContext(), (CharSequence) OtherSpecialRequest, Toast.LENGTH_SHORT).show();
 
                                 String name = customerNameEditText.getText().toString().trim();
                                 String email = emailEditText.getText().toString().trim();
@@ -231,10 +231,10 @@ public class Product_Adapter extends BaseAdapter {
                                     showError(postalCodeEditText, "Postal Code is invalid");
                                 } else {
                                     String Description = "Length : "+length +"cm,"+
-                                            "Width : " +width +"cm,"+
-                                            "Power Input : " +input +"Watts,"+
-                                            "Power output : " +output +"Watts,"+
-                                            "Other Requirement : " +OtherSpecialRequest
+                                                         "Width : " +width +"cm,"+
+                                                         "Power Input : " +input +"Watts,"+
+                                                         "Power output : " +output +"Watts,"+
+                                                         "Other Requirement : " +OtherSpecialRequest
 
                                             ;
 
@@ -242,7 +242,7 @@ public class Product_Adapter extends BaseAdapter {
                                     Calendar calendar = Calendar.getInstance();
                                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-                                    String todayDate = dateFormat.format(calendar.getTime());
+                                   String todayDate = dateFormat.format(calendar.getTime());
                                     Boolean insert = dbHelper.insertOrder(img, ProductName, Quantity.getText().toString(), account.getId(), name, email, contact, address, postalCode, todayDate, Description,"Pending",post.getSupplierId());
                                     if (insert) {
                                         Toast.makeText(context.getApplicationContext(), "Order successful", Toast.LENGTH_SHORT).show();
@@ -299,7 +299,7 @@ public class Product_Adapter extends BaseAdapter {
                                 EditText addressEditText = customView.findViewById(R.id.addressEditText);
                                 EditText postalCodeEditText = customView.findViewById(R.id.postalCodeEditText);
                                 TextView totalPrice=customView.findViewById(R.id.priceText);
-                                //  totalPrice.setText("Rs.00.00");
+                              //  totalPrice.setText("Rs.00.00");
 
                                 String name = customerNameEditText.getText().toString().trim();
                                 String email = emailEditText.getText().toString().trim();

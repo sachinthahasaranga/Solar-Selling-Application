@@ -368,6 +368,36 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close(); // Close the cursor when done to release resources
         return arrayList;
     }
+    public ArrayList<Article> SearchApprovedArticles(String keyword) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Article> arrayList = new ArrayList<>();
+
+        // Define the SQL query to retrieve approved articles that match the keyword
+        String query = "SELECT * FROM Articles WHERE Status = 'Approved' " +
+                "AND (Title LIKE ? OR Description LIKE ?) " +
+                "ORDER BY id DESC";
+
+        // Arguments for the query
+        String[] selectionArgs = {"%" + keyword + "%", "%" + keyword + "%"};
+
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            byte[] img = cursor.getBlob(1);
+            String Title = cursor.getString(2);
+            String Description = cursor.getString(3);
+            String Status = cursor.getString(4);
+            int JournalistId = cursor.getInt(5);
+
+            Article article = new Article(id, img, Title, Description, Status, JournalistId);
+            arrayList.add(article);
+        }
+
+        cursor.close();
+        return arrayList;
+    }
+
     public Boolean updateNewsStatus(int id,String Status) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();

@@ -137,14 +137,18 @@
 
 
 </ScrollView>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/buttom_navigator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="350dp"
+        android:layout_height="56dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="-2dp"
         android:background="@drawable/switch_trcks"
         app:itemIconTint="@drawable/serlector"
         app:itemTextColor="@drawable/serlector"
-        android:layout_alignParentBottom="true"
         app:menu="@menu/menu_customer" />
 
-    </RelativeLayout>
+</RelativeLayout>

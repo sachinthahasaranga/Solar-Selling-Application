@@ -7,6 +7,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:fillViewport="true"
 android:id="@+id/main_layout"
+    android:background="@drawable/background_image"
 tools:context=".Admin_View_Products_Activity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -86,7 +87,7 @@ tools:context=".Admin_View_Products_Activity">
 
         <Button
             android:id="@+id/btn_Pending"
-            android:layout_width="109dp"
+            android:layout_width="111dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_toEndOf="@+id/btn_all"

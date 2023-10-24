@@ -47,7 +47,8 @@
             android:layout_width="312dp"
             android:layout_height="189dp"
             android:layout_marginBottom="28dp"
-            android:inputType="textMultiLine"
+            android:inputType="textNoSuggestions|textMultiLine"
+
             android:text="Description"
             android:textColor="@color/black"
             android:textSize="20sp"

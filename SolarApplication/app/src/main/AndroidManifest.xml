@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SolarApplication"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Customer_Search_Articles_Activity"
+            android:exported="false" />
         <activity
             android:name=".Online_Chat_Bot_Activity"
             android:exported="false" />

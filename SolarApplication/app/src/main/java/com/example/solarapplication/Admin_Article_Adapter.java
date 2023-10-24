@@ -69,6 +69,15 @@ public class Admin_Article_Adapter extends BaseAdapter {
         NewsImage.setImageBitmap(bitmap);
 
 
+        if (post.getStatus().equals("Pending")){
+            Status.setImageResource(R.drawable.approved);
+            String status="approve";
+        }else if (post.getStatus().equals("Approved")){
+            Status.setImageResource(R.drawable.reject);
+            String status="reject";
+        }
+
+
 
         Description.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,13 +101,40 @@ public class Admin_Article_Adapter extends BaseAdapter {
                 String Status = post.getStatus();
                 String newStatus = Status.equals("Approved") ? "Pending" : "Approved";
 
-                if (dbHelper.updateNewsStatus(post.getId(), newStatus)) {
-                    Toast.makeText(context.getApplicationContext(), "Status updated", Toast.LENGTH_SHORT).show();
-                    post.setStatus(newStatus); // Update the status in your data object
-                    notifyDataSetChanged(); // Notify the adapter that the data set has changed
-                } else {
-                    Toast.makeText(context.getApplicationContext(), "Failed to update status", Toast.LENGTH_LONG).show();
-                }
+                androidx.appcompat.app.AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(context);
+                alertDialog2.setTitle("Confirm Action...");
+                alertDialog2.setMessage("Are you sure you want to keep it as "+newStatus+" ?");
+
+                alertDialog2.setIcon(R.drawable.baseline_warning_24);
+                // Setting Positive "Yes" Btn
+                alertDialog2.setPositiveButton("YES",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                if (dbHelper.updateNewsStatus(post.getId(), newStatus)) {
+                                    Toast.makeText(context.getApplicationContext(), "Status updated", Toast.LENGTH_SHORT).show();
+                                    post.setStatus(newStatus); // Update the status in your data object
+                                    notifyDataSetChanged(); // Notify the adapter that the data set has changed
+                                } else {
+                                    Toast.makeText(context.getApplicationContext(), "Failed to update status", Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+                        });
+
+                // Setting Negative "NO" Btn
+                alertDialog2.setNegativeButton("NO",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Write your code here to execute after dialog
+                                dialog.cancel();
+                            }
+                        });
+                // Showing Alert Dialog
+                alertDialog2.show();
+
+
+
             }
         });
         Delete.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +143,7 @@ public class Admin_Article_Adapter extends BaseAdapter {
 
                 androidx.appcompat.app.AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(context);
                 alertDialog2.setTitle("Confirm Action...");
-                alertDialog2.setMessage("Are you sure you want to delete feedback?");
+                alertDialog2.setMessage("Are you sure you want to delete article?");
 
                 alertDialog2.setIcon(R.drawable.baseline_warning_24);
                 // Setting Positive "Yes" Btn

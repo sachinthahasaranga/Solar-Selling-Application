@@ -8,25 +8,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
-public class Customer_View_Articles_Activity extends AppCompatActivity {
 
-EditText SearchText;
-ImageView search;
+public class Customer_Search_Articles_Activity extends AppCompatActivity {
+    EditText SearchText;
+    ImageView search;
     ListView Listview;
     ArrayList<Article> arrayList;
     Customer_Article_Adapter adapter;
@@ -42,22 +39,17 @@ ImageView search;
         startActivity(intent);
         overridePendingTransition(0, 0);
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_customer_view);
+        setContentView(R.layout.activity_customer_search_articles);
+
 
         Listview = findViewById(R.id.listView);
         search=findViewById(R.id.btn_Search);
         SearchText=findViewById(R.id.txt_S_Name);
-
-        Intent intent = getIntent();
-        account = (Account) intent.getSerializableExtra("UserInfo");
-
-        showPostData();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.buttom_navigator);
         bottomNavigationView.setSelectedItemId(R.id.articleFragment);
@@ -104,6 +96,33 @@ ImageView search;
             }
         });
 
+        Intent intent = getIntent();
+        account = (Account) intent.getSerializableExtra("UserInfo");
+        String searchQuery = intent.getStringExtra("SEARCH_QUERY");
+
+        arrayList = dbh.SearchApprovedArticles(searchQuery);
+        if (arrayList.isEmpty()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Searched Articles Not Found.")
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(Customer_Search_Articles_Activity.this, Customer_View_Articles_Activity.class);
+                            intent.putExtra("UserInfo", account);
+                            intent.removeExtra("SEARCH_QUERY");
+                            startActivity(intent);
+                            overridePendingTransition(0, 0);
+
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        } else {
+            adapter = new Customer_Article_Adapter(this, arrayList,dbh);
+            Listview.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
+
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,7 +140,7 @@ ImageView search;
                     });
                     builder.show();
                 } else {
-                    Intent intent = new Intent(Customer_View_Articles_Activity.this, Customer_Search_Articles_Activity.class);
+                    Intent intent = new Intent(Customer_Search_Articles_Activity.this, Customer_Search_Articles_Activity.class);
                     intent.putExtra("SEARCH_QUERY", searchQuery);
                     intent.putExtra("UserInfo", account);
                     startActivity(intent);
@@ -152,36 +171,6 @@ ImageView search;
             }
         });
 
-    }
-    private void showPostData() {
-        try {
-            arrayList = dbh.ViewApprovedArticles();
 
-
-            if (arrayList.isEmpty()) {
-                Toast.makeText(Customer_View_Articles_Activity.this, "No Articles add yet", Toast.LENGTH_LONG).show();
-            finish();
-            }else {
-                adapter = new Customer_Article_Adapter(this, arrayList, dbh);
-                Listview.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e("MyTag", "An error occurred: " + e.getMessage());
-
-            // Create an AlertDialog to display the error message
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Error");
-            builder.setMessage("An error occurred: " + e.getMessage());
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
-                }
-            });
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        }
     }
 }

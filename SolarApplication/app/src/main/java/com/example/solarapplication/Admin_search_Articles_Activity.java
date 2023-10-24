@@ -81,7 +81,7 @@ public class Admin_search_Articles_Activity extends AppCompatActivity {
         pending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Admin_search_Articles_Activity.this, Admin_search_Feedback_Activity.class);//Articles
+                Intent intent = new Intent(Admin_search_Articles_Activity.this, Admin_search_Articles_Activity.class);//Articles
                 intent.putExtra("SEARCH_QUERY", "Pending");
                 startActivity(intent);
             }
@@ -90,7 +90,7 @@ public class Admin_search_Articles_Activity extends AppCompatActivity {
         all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Admin_search_Articles_Activity.this, Admin_Manage_News_Activity.class);//Articles
+                Intent intent = new Intent(Admin_search_Articles_Activity.this, Admin_search_Articles_Activity.class);//Articles
                 startActivity(intent);
             }
         });
